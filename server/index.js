@@ -21,6 +21,20 @@ app.get("/getusers", async (req, res) => {
     }
 })
 
+app.put("/updateuser/:id", async (req, res)=>{
+    try{
+        const UserId = req.params.id;
+        const updatedUserData = req.body
+        const updateuser = await userModel.findByIdAndUpdate( 
+            userId,
+            updatedUserData,
+            { new: true });
+            res.json(updateuser)
+    }catch(err){
+        res.json(err)
+    }
+})
+
 app.post("/createuser", async (req, res) =>{
     const user = req.body
     const newUser = new userModel(user)
@@ -28,6 +42,7 @@ app.post("/createuser", async (req, res) =>{
     
     res.json(user)
 })
+
 
 app.listen(port, ()=>{
     console.log(`server running on port ${port}`);
